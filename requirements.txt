@@ -1,0 +1,5 @@
+promptflow
+promptflow[executable]
+promptflow-tools
+azure.search.documents
+beautifulsoup4
