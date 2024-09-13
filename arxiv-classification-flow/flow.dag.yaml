@@ -1,0 +1,59 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  date:
+    type: string
+    is_chat_input: true
+    default: "20240912"
+  category:
+    type: string
+    is_chat_input: true
+    default: quantum computing
+outputs: {}
+nodes:
+- name: Fetch_Arxiv_Papers
+  type: python
+  source:
+    type: code
+    path: fetch_arxiv_papers.py
+  inputs:
+    search_query: ${inputs.category}
+    date: ${inputs.date}
+  outputs: null
+- name: Fetch_Categories
+  type: python
+  source:
+    type: code
+    path: fetch_categories.py
+  inputs:
+    category: ${inputs.category}
+- name: Summarize_Abstracts
+  type: python
+  source:
+    type: code
+    path: summarize_abstracts.py
+  inputs:
+    connection: open_ai_connection
+    papers: ${Fetch_Arxiv_Papers.output}
+    deployment_name: gpt-4o-mini
+- name: Classify_Papers
+  type: python
+  source:
+    type: code
+    path: classify_papers.py
+  inputs:
+    connection: open_ai_connection
+    categories: ${Fetch_Categories.output}
+    papers: ${Fetch_Arxiv_Papers.output}
+    deployment_name: gpt-4o-mini
+  outputs: null
+- name: Combine_Results
+  type: python
+  source:
+    type: code
+    path: combine_results.py
+  inputs:
+    summarized_papers: ${Summarize_Abstracts.output}
+    classified_papers: ${Classify_Papers.output}
+  outputs: null
