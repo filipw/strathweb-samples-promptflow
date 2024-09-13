@@ -3,7 +3,7 @@ import requests
 import xml.etree.ElementTree as ET
 
 @tool
-def fetch_and_parse_arxiv_papers(search_query: str, date: str = None, start: int = 0, max_results: int = 3) -> list:
+def fetch_and_parse_arxiv_papers(search_query: str, date: str = None, start: int = 0, max_results: int = 1) -> list:
     """
     Fetches papers from the arXiv API based on the search query and parses the response.
 

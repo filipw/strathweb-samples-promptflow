@@ -57,3 +57,15 @@ nodes:
     summarized_papers: ${Summarize_Abstracts.output}
     classified_papers: ${Classify_Papers.output}
   outputs: null
+- name: Generate_Digest
+  type: llm
+  source:
+    type: code
+    path: digest.jinja2
+  inputs:
+    deployment_name: gpt-4o-mini
+    temperature: 0
+    category: ${inputs.category}
+    papers: ${Combine_Results.output}
+  connection: open_ai_connection
+  api: chat
