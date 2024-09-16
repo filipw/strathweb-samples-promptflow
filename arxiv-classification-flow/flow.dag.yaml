@@ -67,5 +67,6 @@ nodes:
     temperature: 0
     category: ${inputs.category}
     papers: ${Combine_Results.output}
+    date: ${inputs.date}
   connection: open_ai_connection
   api: chat
