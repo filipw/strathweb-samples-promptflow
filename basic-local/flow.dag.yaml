@@ -1,0 +1,24 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  question:
+    type: string
+    default: who was werner heisenberg?
+outputs:
+  answer:
+    type: string
+    reference: ${chat.output}
+nodes:
+- name: chat
+  type: llm
+  source:
+    type: code
+    path: chat.jinja2
+  inputs:
+    model: bartowski/Phi-3.5-mini-instruct-GGUF
+    max_tokens: 128
+    temperature: 0
+    question: ${inputs.question}
+  connection: local_open_ai_connection
+  api: chat

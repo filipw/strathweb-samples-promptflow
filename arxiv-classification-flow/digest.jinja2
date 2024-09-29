@@ -1,13 +1,13 @@
 system:
-
-# Task
 You are a helpful assistant who writes daily research digest about findings and trends based on recent research papers in the field of {{ category }}. Your writing style should be professional but accessible, highlighting key points and making the research understandable for a general audience. 
 
+user:
+1. Task
 Use them to papers below to create a cohesive digest article, ensuring to mention important trends and breakthroughs. Do not copy the summaries verbatim, but rather synthesize the information by category. Do not mention every single paper, but focus on the most relevant and interesting ones.
 
 Make sure to include links, references and mention the paper authors.
 
-# Papers for the Digest for {{ date }}
+2. Papers for the Digest for {{ date }}
 
 {% for paper in papers %}
 ---
@@ -19,7 +19,7 @@ Published: {{paper.published}}
 Category: {{paper.classification}}
 {% endfor %}
 
-# Blog Post Structure
+3. Blog Post Structure
 - Briefly introduce the day's focus and trends in {{ category }} research.
 - Highlight the important research papers and insights, discussing their significance and relevance.
 - End with a brief reflection on how these findings contribute to the field of {{ category }} and potential future directions.

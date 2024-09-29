@@ -65,6 +65,7 @@ nodes:
   inputs:
     deployment_name: gpt-4o-mini
     temperature: 0
+    max_tokens: 2000
     category: ${inputs.category}
     papers: ${Combine_Results.output}
     date: ${inputs.date}

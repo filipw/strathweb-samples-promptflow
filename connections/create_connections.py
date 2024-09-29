@@ -4,6 +4,7 @@ from pathlib import Path
 from promptflow.client import PFClient
 from promptflow.entities import (
     AzureOpenAIConnection,
+    OpenAIConnection,
     CustomConnection,
     CognitiveSearchConnection,
 )
@@ -26,6 +27,17 @@ connection = AzureOpenAIConnection(
 
 print(f"Creating connection {connection.name}...")
 result = pf.connections.create_or_update(connection)
+print(result)
+
+# for an LM Studio host running at port 1234
+local_connection = OpenAIConnection(
+    name="local_open_ai_connection",
+    api_key="sk-local",
+    base_url="http://localhost:1234/v1",
+)
+
+print(f"Creating connection {local_connection.name}...")
+result = pf.connections.create_or_update(local_connection)
 print(result)
 
 AZURE_AI_SEARCH_ENDPOINT = os.environ["AZURE_AI_SEARCH_ENDPOINT"]

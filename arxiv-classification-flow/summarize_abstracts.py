@@ -2,21 +2,19 @@ import os
 from promptflow.core import tool
 from dotenv import load_dotenv
 from typing import Union
-from promptflow.connections import CustomConnection, AzureOpenAIConnection
+from promptflow.connections import CustomConnection, AzureOpenAIConnection, OpenAIConnection
 
-def to_bool(value) -> bool:
-    return str(value).lower() == "true"
-
-def get_client(connection: Union[CustomConnection, AzureOpenAIConnection]):
-    connection_dict = dict(connection)
-    api_key = connection_dict.get("api_key")
-    conn = dict(
-        api_key=api_key,
-    )
+def get_client(connection: Union[CustomConnection, AzureOpenAIConnection, OpenAIConnection]):
+    conn = dict(connection)
+    api_key = conn.get("api_key")
     if api_key.startswith("sk-"):
         from openai import OpenAI as Client
     else:
         from openai import AzureOpenAI as Client
+        connection_dict = dict(connection)
+        conn = dict(
+            api_key=api_key,
+        )
         conn.update(
             azure_endpoint=connection_dict.get("api_base"),
             api_version=connection_dict.get("api_version", "2023-07-01-preview"),
@@ -27,7 +25,7 @@ def get_client(connection: Union[CustomConnection, AzureOpenAIConnection]):
 def summarize_abstracts(
     papers: list,
     deployment_name: str,
-    connection: Union[CustomConnection, AzureOpenAIConnection] = None,
+    connection: Union[CustomConnection, AzureOpenAIConnection, OpenAIConnection] = None,
 ) -> list:
     if not papers:
         raise ValueError("No papers provided.")

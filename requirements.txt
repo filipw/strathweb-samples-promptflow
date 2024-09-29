@@ -1,5 +1,6 @@
 promptflow
 promptflow[executable]
 promptflow-tools
+promptflow-azure
 azure.search.documents
-beautifulsoup4
+numpy<2

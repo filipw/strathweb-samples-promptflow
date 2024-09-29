@@ -2,21 +2,19 @@ import os
 from promptflow.core import tool
 from dotenv import load_dotenv
 from typing import Union
-from promptflow.connections import CustomConnection, AzureOpenAIConnection
+from promptflow.connections import CustomConnection, AzureOpenAIConnection, OpenAIConnection
 
-def to_bool(value) -> bool:
-    return str(value).lower() == "true"
-
-def get_client(connection: Union[CustomConnection, AzureOpenAIConnection]):
-    connection_dict = dict(connection)
-    api_key = connection_dict.get("api_key")
-    conn = dict(
-        api_key=api_key,
-    )
+def get_client(connection: Union[CustomConnection, AzureOpenAIConnection, OpenAIConnection]):
+    conn = dict(connection)
+    api_key = conn.get("api_key")
     if api_key.startswith("sk-"):
         from openai import OpenAI as Client
     else:
         from openai import AzureOpenAI as Client
+        connection_dict = dict(connection)
+        conn = dict(
+            api_key=api_key,
+        )
         conn.update(
             azure_endpoint=connection_dict.get("api_base"),
             api_version=connection_dict.get("api_version", "2023-07-01-preview"),
@@ -28,12 +26,11 @@ def classify_papers(
     papers: list,
     deployment_name: str,
     categories: list,
-    connection: Union[CustomConnection, AzureOpenAIConnection] = None,
+    connection: Union[CustomConnection, AzureOpenAIConnection, OpenAIConnection] = None,
 ) -> list:
     if not papers:
         raise ValueError("No papers provided.")
 
-    # Initialize OpenAI client
     openai = get_client(connection)
 
     classified_papers = []
@@ -60,7 +57,6 @@ def classify_papers(
 
             classification = response.choices[0].message.content.strip()
 
-        # Add the classification to the paper
         classified_paper = paper.copy()
         classified_paper['classification'] = classification
         classified_papers.append(classified_paper)
