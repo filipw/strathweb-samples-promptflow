@@ -22,7 +22,7 @@ inputs:
 outputs:
   answer:
     type: string
-    reference: ${Azure_OpenAI_GPT_4_Turbo_with_Vision_fpen.output}
+    reference: ${GPT_4o_with_vision.output}
     is_chat_output: true
 nodes:
 - name: fetch_user_data
