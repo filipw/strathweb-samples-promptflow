@@ -1,0 +1,53 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  chat_history:
+    type: list
+    is_chat_history: true
+    default: []
+  question:
+    type: string
+    is_chat_input: true
+    default: i need a basketball
+  user_id:
+    type: int
+    default: 1
+    is_chat_input: false
+    is_chat_history: false
+outputs:
+  answer:
+    type: string
+    reference: ${gpt.output}
+    is_chat_output: true
+nodes:
+- name: fetch_user_data
+  type: python
+  source:
+    type: code
+    path: fetch_user_data.py
+  inputs:
+    user_id: ${inputs.user_id}
+- name: do_search
+  type: python
+  source:
+    type: code
+    path: do_search.py
+  inputs:
+    question: ${inputs.question}
+    index_name: rag-florence2
+    search: ai_search_connection
+- name: gpt
+  type: llm
+  source:
+    type: code
+    path: rag_chat.jinja2
+  inputs:
+    deployment_name: gpt-4o-mini
+    temperature: 0
+    question: ${inputs.question}
+    documentation: ${do_search.output}
+    chat_history: ${inputs.chat_history}
+    username: ${fetch_user_data.output}
+  connection: open_ai_connection
+  api: chat
