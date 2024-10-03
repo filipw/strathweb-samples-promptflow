@@ -9,7 +9,7 @@ inputs:
   question:
     type: string
     is_chat_input: true
-    default: do you have a ball that matches my uniform?
+    default: do you have anything in this style
   user_id:
     type: int
     default: 1
@@ -18,7 +18,7 @@ inputs:
   image:
     type: image
     optional: true
-    default: ../images/football-uniform-flamingo.jpg
+    default: ./data/Flamingo.jpg
 outputs:
   answer:
     type: string
@@ -58,7 +58,7 @@ nodes:
     path: chat_with_vision.jinja2
   inputs:
     connection: open_ai_connection
-    deployment_name: gpt-4o-mini
+    deployment_name: gpt-4o
     temperature: 0
     question: ${inputs.question}
     documentation: ${do_search.output}
