@@ -22,7 +22,7 @@ inputs:
 outputs:
   answer:
     type: string
-    reference: ${GPT_4o_with_vision.output}
+    reference: ${gptvision.output}
     is_chat_output: true
 nodes:
 - name: fetch_user_data
@@ -50,7 +50,7 @@ nodes:
     index_name: rag-florence2
     search: ai_search_connection
     image_vector: ${vectorize_image.output}
-- name: GPT_4o_with_vision
+- name: gptvision
   type: custom_llm
   source:
     type: package_with_prompt
@@ -59,10 +59,9 @@ nodes:
   inputs:
     connection: open_ai_connection
     deployment_name: gpt-4o-mini
-    max_tokens: 256
     temperature: 0
-    image_input: ${inputs.image}
+    question: ${inputs.question}
     documentation: ${do_search.output}
     chat_history: ${inputs.chat_history}
-    question: ${inputs.question}
+    image_input: ${inputs.image}
     username: ${fetch_user_data.output}
