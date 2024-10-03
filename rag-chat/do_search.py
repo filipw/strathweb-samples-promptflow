@@ -28,11 +28,14 @@ def do_search(
         top=5,
         search_text=question,  
         vector_queries=None,
-        select=["description", "filepath"],
+        select=["description", "name", "category", "price"],
     )  
     
     docs = [
         {
+            "name": doc["name"],
+            "category": doc["category"],
+            "price": doc["price"],
             "description": doc["description"],
             "score": doc["@search.score"]
         }
