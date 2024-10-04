@@ -160,6 +160,12 @@
           "type": [
             "CognitiveSearchConnection"
           ]
+        },
+        "question_vector": {
+          "type": [
+            "object"
+          ],
+          "default": "[]"
         }
       },
       "source": "do_search.py",
@@ -221,6 +227,41 @@
         }
       },
       "source": "rag_chat.jinja2"
+    },
+    "vectorize_query.py": {
+      "type": "python",
+      "inputs": {
+        "query": {
+          "type": [
+            "string"
+          ]
+        },
+        "connection": {
+          "type": [
+            "CustomConnection",
+            "AzureOpenAIConnection",
+            "OpenAIConnection"
+          ]
+        }
+      },
+      "source": "vectorize_query.py",
+      "function": "vectorize_query"
+    },
+    "extract_query.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        },
+        "chat_history": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "extract_query.jinja2"
     }
   }
 }

@@ -35,17 +35,29 @@ nodes:
     path: vectorize_query.py
   inputs:
     connection: embeddings_open_ai_connection
-    query: ${inputs.question}
+    query: ${gpt_query_extractor.output}
 - name: do_search
   type: python
   source:
     type: code
     path: do_search.py
   inputs:
-    question: ${inputs.question}
+    question: ${gpt_query_extractor.output}
     question_vector: ${vectorize_query.output}
     index_name: sports-store
     search: ai_search_connection
+- name: gpt_query_extractor
+  type: llm
+  source:
+    type: code
+    path: extract_query.jinja2
+  inputs:
+    deployment_name: gpt-4o-mini
+    temperature: 0
+    question: ${inputs.question}
+    chat_history: ${inputs.chat_history}
+  connection: open_ai_connection
+  api: chat
 - name: gpt
   type: llm
   source:

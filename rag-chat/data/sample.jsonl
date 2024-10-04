@@ -1,3 +1,2 @@
-{"user_id": "2", "question": "I need a soccer ball", "chat_history": []}
-{"user_id": "1", "question": "anything africa themed?", "chat_history": []}
-{"user_id": "2", "question": "write a song about bees", "chat_history": []} 
+{"user_id": "2", "question": "I need something Miami themed", "chat_history": []}
+{"user_id": "1", "question": "I need something locally themed", "chat_history": [{"inputs": {"question": "hi i am in miami"},"outputs": {"answer": "Hi Filip! How's it going in Miami? If you need any help with sports gear or have questions, just let me know!"}}]}
