@@ -9,7 +9,7 @@ inputs:
   question:
     type: string
     is_chat_input: true
-    default: i need a basketball
+    default: i need something Miami themed
   user_id:
     type: int
     default: 1
@@ -28,6 +28,14 @@ nodes:
     path: fetch_user_data.py
   inputs:
     user_id: ${inputs.user_id}
+- name: vectorize_query
+  type: python
+  source:
+    type: code
+    path: vectorize_query.py
+  inputs:
+    connection: embeddings_open_ai_connection
+    query: ${inputs.question}
 - name: do_search
   type: python
   source:
@@ -35,6 +43,7 @@ nodes:
     path: do_search.py
   inputs:
     question: ${inputs.question}
+    question_vector: ${vectorize_query.output}
     index_name: sports-store
     search: ai_search_connection
 - name: gpt

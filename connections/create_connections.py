@@ -40,6 +40,21 @@ print(f"Creating connection {local_connection.name}...")
 result = pf.connections.create_or_update(local_connection)
 print(result)
 
+EMBEDDINGS_AZURE_OPENAI_KEY= os.environ["EMBEDDINGS_AZURE_OPENAI_KEY"]
+EMBEDDINGS_AZURE_OPENAI_RESOURCE= os.environ["EMBEDDINGS_AZURE_OPENAI_RESOURCE"]
+EMBEDDINGS_API_VERSION = os.getenv("EMBEDDINGS_API_VERSION") or "2024-08-01-preview"
+embeddings_connection = AzureOpenAIConnection(
+    name="embeddings_open_ai_connection",
+    api_key=EMBEDDINGS_AZURE_OPENAI_KEY,
+    api_base=f"https://{EMBEDDINGS_AZURE_OPENAI_RESOURCE}.openai.azure.com/",
+    api_type="azure",
+    api_version=EMBEDDINGS_API_VERSION,
+)
+
+print(f"Creating connection {embeddings_connection.name}...")
+result = pf.connections.create_or_update(embeddings_connection)
+print(result)
+
 AZURE_AI_SEARCH_ENDPOINT = os.environ["AZURE_AI_SEARCH_ENDPOINT"]
 AZURE_AI_SEARCH_KEY = os.environ["AZURE_AI_SEARCH_KEY"]
 API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION") or "2024-03-01-preview"

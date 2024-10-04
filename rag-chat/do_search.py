@@ -17,6 +17,7 @@ def do_search(
     question: str,
     index_name: str,
     search: CognitiveSearchConnection,
+    question_vector: List[float] = []
 ) -> str:
     search_client = SearchClient(
         endpoint=search.configs["api_base"],
@@ -24,10 +25,14 @@ def do_search(
         credential=AzureKeyCredential(search.secrets["api_key"]),
     )
 
+    vector_queries = None
+    if question_vector:
+        vector_queries = [VectorizedQuery(vector=question_vector, k_nearest_neighbors=3, fields="description_vector")]
+
     results = search_client.search(  
         top=5,
         search_text=question,  
-        vector_queries=None,
+        vector_queries=vector_queries,
         select=["description", "name", "category", "price"],
     )  
     

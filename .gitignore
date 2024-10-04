@@ -164,4 +164,5 @@ cython_debug/
 .vscode/settings.json
 vision-chat/.promptflow/
 arxiv-classification-flow/.promptflow/
+rag-chat/.promptflow/
 processed_data/
