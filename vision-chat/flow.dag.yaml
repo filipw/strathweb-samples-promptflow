@@ -47,7 +47,7 @@ nodes:
     path: do_search.py
   inputs:
     question: ${inputs.question}
-    index_name: rag-florence2
+    index_name: sports-store
     search: ai_search_connection
     image_vector: ${vectorize_image.output}
 - name: gptvision

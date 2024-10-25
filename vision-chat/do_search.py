@@ -27,17 +27,20 @@ def do_search(
 
     vector_queries = None
     if image_vector:
-        vector_queries = [VectorizedQuery(vector=image_vector, k_nearest_neighbors=3, fields="image_vector")]
+        vector_queries = [VectorizedQuery(vector=image_vector, k_nearest_neighbors=5, fields="image_vector")]
 
     results = search_client.search(  
         top=5,
         search_text=question,  
         vector_queries=vector_queries,
-        select=["description", "filepath"],
+        select=["description", "name", "category", "price"],
     )  
     
     docs = [
         {
+            "name": doc["name"],
+            "category": doc["category"],
+            "price": doc["price"],
             "description": doc["description"],
             "score": doc["@search.score"]
         }

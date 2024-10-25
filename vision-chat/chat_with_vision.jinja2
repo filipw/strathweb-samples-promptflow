@@ -8,10 +8,11 @@ As the customer assistant, you answer questions briefly, succinctly and friendly
 The following documentation should be used in the response. Do not invent products not included here. If no products are available, respond with that you couldn't find any information about that.
 
 {% for item in documentation %}
-product description: {{item.description}}
+product: {{item.name}}
+category: {{item.category}}
+price: {{item.price}}
+description: {{item.description}}
 {% endfor %}
-
-# Chat history
 
 {% for item in chat_history %}
 user:
