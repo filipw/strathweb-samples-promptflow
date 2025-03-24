@@ -24,11 +24,12 @@ def get_client(connection: Union[CustomConnection, AzureOpenAIConnection, OpenAI
 def fetch_llm_response(question: str, deployment_name: str, connection: Union[CustomConnection, AzureOpenAIConnection, OpenAIConnection] = None) -> str:
     client = get_client(connection)
 
-    prompt = "You are a math expert. Answer the following question in detail: " + question
+    prompt = "You are a math expert. Answer the user's question in detail."
 
     response = client.chat.completions.create(
         messages=[
-                    {"role": "user", "content": prompt}
+                    {"role": "developer", "content": prompt},
+                    {"role": "user", "content": question}
                 ],
         max_completion_tokens=5000,
         model=deployment_name,
