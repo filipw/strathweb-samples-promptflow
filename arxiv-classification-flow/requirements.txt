@@ -1,3 +1,0 @@
-promptflow
-promptflow[executable]
-promptflow-tools

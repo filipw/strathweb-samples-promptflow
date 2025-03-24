@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
 environment:
-  python_requirements_txt: requirements.txt
+  python_requirements_txt: ../requirements.txt
 inputs:
   chat_history:
     type: list
@@ -9,8 +9,7 @@ inputs:
   question:
     type: string
     is_chat_input: true
-    default: hello, who are you?
-    #default: Two trains, 20 miles apart, approach each other. A fly starts at the front of one train and flies towards the other. Upon reaching it, it turns around and flies toward the other train. It continues like that until the train collide. The fly travels at 15 kmph, and each train travels at 10 kmph. How far does the fly travel before being squashed? 
+    default: Two trains, 20 miles apart, approach each other. A fly starts at the front of one train and flies towards the other. Upon reaching it, it turns around and flies toward the other train. It continues like that until the train collide. The fly travels at 15 kmph, and each train travels at 10 kmph. How far does the fly travel before being squashed? 
 outputs:
   response:
     type: string
@@ -23,6 +22,6 @@ nodes:
     type: code
     path: fetch_llm_response.py
    inputs:
-    deployment_name: gpt-4o-mini
+    deployment_name: o3-mini
     connection: open_ai_connection
     question: ${inputs.question}

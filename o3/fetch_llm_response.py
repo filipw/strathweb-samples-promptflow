@@ -32,7 +32,7 @@ def fetch_llm_response(question: str, deployment_name: str, connection: Union[Cu
                 ],
         max_completion_tokens=5000,
         model=deployment_name,
-        #reasoning_effort="low"
+        reasoning_effort="low"
     )
 
     txt = response.choices[0].message.content
